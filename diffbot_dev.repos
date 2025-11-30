@@ -7,3 +7,7 @@ repositories:
     type: git
     url: https://github.com/ros-mobile-robots/remo_description
     version: main
+  src/motor_ros:
+    type: git
+    url: https://github.com/peng-yongsheng/adafruit_motor_ros
+    version: main

@@ -21,8 +21,8 @@ class MotorDriver:
         self._motor_right_num = 2
         self._motor_left = self._mh.motor1
         self._motor_right = self._mh.motor2
-        self._motor_left.setSpeed(0)
-        self._motor_right.setSpeed(0)
+        self._motor_left.throttle = 0
+        self._motor_right.throttle = 0
         self._motor_left.run(MotorKit.FORWARD)
         self._motor_right.run(MotorKit.FORWARD)
         self._motor_left.run(MotorKit.RELEASE)
@@ -69,8 +69,8 @@ class MotorDriver:
         #print "Final pwm is:"
         #print int(pwm_left), int(pwm_right)
 
-        self._motor_left.setSpeed(int(pwm_left))
-        self._motor_right.setSpeed(int(pwm_right))
+        self._motor_left.throttle = 1
+        self._motor_right.throttle =1
 
         self.motors_on = True
 

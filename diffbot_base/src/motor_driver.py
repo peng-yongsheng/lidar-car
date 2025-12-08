@@ -19,8 +19,8 @@ class MotorDriver:
         self._mh = MotorKit(i2c=board.I2C())
         self._motor_left_num = 1
         self._motor_right_num = 2
-        self._motor_left = self._mh.getMotor(self._motor_left_num)
-        self._motor_right = self._mh.getMotor(self._motor_right_num)
+        self._motor_left = self._mh.motor1
+        self._motor_right = self._mh.motor2
         self._motor_left.setSpeed(0)
         self._motor_right.setSpeed(0)
         self._motor_left.run(MotorKit.FORWARD)

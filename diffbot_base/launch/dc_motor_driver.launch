@@ -5,6 +5,6 @@
 
     <node pkg="diffbot_base" type="motor_driver.py" name="motor_driver" respawn="true" output="screen">
         <param name="model" value="$(arg model)" />
-        <param name="param_path" value="$(find dc_motor_driver)/config/motor_params.yaml"/>
+        <param name="param_path" value="$(find diffbot_base)/config/motor_params.yaml"/>
     </node>
 </launch>

@@ -1,10 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import rospy
 import yaml
-from geometry_msgs.msg import PoseStamped
+import board
+import time
 from geometry_msgs.msg import Twist
-from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
-#from adafruit_motorkit import MotorKit
+# from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
+from adafruit_motorkit import MotorKit
 
 class MotorDriver:
     def __init__(self, motor_gain, wheel_sep, wheel_radius):
@@ -15,17 +16,17 @@ class MotorDriver:
         self._max_rpm = 130
         self._max_pwm = 255
 
-        self._mh = Adafruit_MotorHAT(addr=0x60)
+        self._mh = MotorKit(i2c=board.I2C())
         self._motor_left_num = 1
         self._motor_right_num = 2
         self._motor_left = self._mh.getMotor(self._motor_left_num)
         self._motor_right = self._mh.getMotor(self._motor_right_num)
         self._motor_left.setSpeed(0)
         self._motor_right.setSpeed(0)
-        self._motor_left.run(Adafruit_MotorHAT.FORWARD)
-        self._motor_right.run(Adafruit_MotorHAT.FORWARD)
-        self._motor_left.run(Adafruit_MotorHAT.RELEASE)
-        self._motor_right.run(Adafruit_MotorHAT.RELEASE)
+        self._motor_left.run(MotorKit.FORWARD)
+        self._motor_right.run(MotorKit.FORWARD)
+        self._motor_left.run(MotorKit.RELEASE)
+        self._motor_right.run(MotorKit.RELEASE)
 
         self.last_msg_time = None
 
@@ -34,8 +35,8 @@ class MotorDriver:
 
     # recommended for auto-disabling motors on shutdown!
     def turnOffMotors(self):
-        self._mh.getMotor(self._motor_left_num).run(Adafruit_MotorHAT.RELEASE)
-        self._mh.getMotor(self._motor_right_num).run(Adafruit_MotorHAT.RELEASE)
+        self._mh.getMotor(self._motor_left_num).run(MotorKit.RELEASE)
+        self._mh.getMotor(self._motor_right_num).run(MotorKit.RELEASE)
         self.motors_on = False
 
     def drive(self,twist):
@@ -48,18 +49,18 @@ class MotorDriver:
         pwm_right = vel_right*self._max_pwm/self._max_rpm
 
         if (pwm_left < 0):
-            self._motor_left.run(Adafruit_MotorHAT.BACKWARD)
+            self._motor_left.run(MotorKit.BACKWARD)
             pwm_left = -pwm_left
         else:
-            self._motor_left.run(Adafruit_MotorHAT.FORWARD)
+            self._motor_left.run(MotorKit.FORWARD)
         pwm_left = max(min(pwm_left,255),0)
         #if pwm_left < 45:
         #    pwm_left = 0
         if (pwm_right < 0):
-            self._motor_right.run(Adafruit_MotorHAT.BACKWARD)
+            self._motor_right.run(MotorKit.BACKWARD)
             pwm_right = -pwm_right
         else:
-            self._motor_right.run(Adafruit_MotorHAT.FORWARD)
+            self._motor_right.run(MotorKit.FORWARD)
         pwm_right = max(min(pwm_right,255),0)
 
         #if pwm_right < 45:

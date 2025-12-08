@@ -23,10 +23,13 @@ class MotorDriver:
         self._motor_right = self._mh.motor2
         self._motor_left.throttle = 0
         self._motor_right.throttle = 0
-        self._motor_left.run(MotorKit.FORWARD)
-        self._motor_right.run(MotorKit.FORWARD)
-        self._motor_left.run(MotorKit.RELEASE)
-        self._motor_right.run(MotorKit.RELEASE)
+        self._motor_left.throttle = 1
+        self._motor_right.throttle = 1
+
+        time.sleep(2)
+
+        self._motor_left.throttle = 0
+        self._motor_right.throttle = 0
 
         self.last_msg_time = None
 
@@ -35,8 +38,8 @@ class MotorDriver:
 
     # recommended for auto-disabling motors on shutdown!
     def turnOffMotors(self):
-        self._mh.motor1.run(MotorKit.RELEASE)
-        self._mh.motor2.run(MotorKit.RELEASE)
+        self._mh.motor1.throttle = 0
+        self._mh.motor2.throttle = 0
         self.motors_on = False
 
     def drive(self,twist):
@@ -49,18 +52,18 @@ class MotorDriver:
         pwm_right = vel_right*self._max_pwm/self._max_rpm
 
         if (pwm_left < 0):
-            self._motor_left.run(MotorKit.BACKWARD)
+            self._motor_left.throttle = -1
             pwm_left = -pwm_left
         else:
-            self._motor_left.run(MotorKit.FORWARD)
+            self._motor_left.throttle = 1
         pwm_left = max(min(pwm_left,255),0)
         #if pwm_left < 45:
         #    pwm_left = 0
         if (pwm_right < 0):
-            self._motor_right.run(MotorKit.BACKWARD)
+            self._motor_right.throttle = -1
             pwm_right = -pwm_right
         else:
-            self._motor_right.run(MotorKit.FORWARD)
+            self._motor_right.throttle = 1
         pwm_right = max(min(pwm_right,255),0)
 
         #if pwm_right < 45:

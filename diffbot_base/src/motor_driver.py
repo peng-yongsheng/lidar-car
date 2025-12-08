@@ -35,8 +35,8 @@ class MotorDriver:
 
     # recommended for auto-disabling motors on shutdown!
     def turnOffMotors(self):
-        self._mh.getMotor(self._motor_left_num).run(MotorKit.RELEASE)
-        self._mh.getMotor(self._motor_right_num).run(MotorKit.RELEASE)
+        self._mh.motor1.run(MotorKit.RELEASE)
+        self._mh.motor2.run(MotorKit.RELEASE)
         self.motors_on = False
 
     def drive(self,twist):

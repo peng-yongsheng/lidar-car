@@ -16,6 +16,9 @@ find_package(catkin REQUIRED COMPONENTS
   dynamic_reconfigure
   urdf
   roscpp
+  rospy
+  std_msgs
+  std_srvs
   sensor_msgs
   diffbot_msgs
   rosparam_shortcuts
@@ -76,10 +79,11 @@ find_package(Boost REQUIRED COMPONENTS system thread)
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   sensor_msgs
-# )
+generate_messages(
+   DEPENDENCIES
+   std_msgs
+   std_srvs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##

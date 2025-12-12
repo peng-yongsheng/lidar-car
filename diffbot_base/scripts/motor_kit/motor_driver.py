@@ -4,12 +4,11 @@ import yaml
 import board
 import time
 from geometry_msgs.msg import Twist
-# from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
 from adafruit_motorkit import MotorKit
 
 class MotorDriver:
     def __init__(self, motor_gain, wheel_sep, wheel_radius):
-        print("[motor_driver]: init")
+        rospy.loginfo("[motor_driver]: init")
 
         self.model = rospy.get_param("~model",False)
         self._wheel_sep = wheel_sep
@@ -40,14 +39,14 @@ class MotorDriver:
 
     # recommended for auto-disabling motors on shutdown!
     def turnOffMotors(self):
-        print("[motor_driver]: turnOffMotors")
+        rospy.loginfo("[motor_driver]: turnOffMotors")
 
         self._mh.motor1.throttle = 0
         self._mh.motor2.throttle = 0
         self.motors_on = False
 
     def drive(self,twist):
-        print("[motor_driver]: drive")
+        rospy.loginfo("[motor_driver]: drive")
 
         x = twist.linear.x
         w = twist.angular.z
@@ -89,7 +88,7 @@ class MotorDriver:
 
 
 if __name__ == '__main__':
-    print("[motor_driver]: main")
+    rospy.loginfo("[motor_driver]: main")
 
     node = rospy.init_node('motor_driver')
 
@@ -110,7 +109,7 @@ if __name__ == '__main__':
 
     if driver.model:
         timeout = 1
-        print("[motor_driver]: Mode on")
+        rospy.loginfo("[motor_driver]: Mode on")
     else:
         timeout = 0.1
 

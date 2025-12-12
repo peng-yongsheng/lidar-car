@@ -9,7 +9,7 @@ from adafruit_motorkit import MotorKit
 
 class MotorDriver:
     def __init__(self, motor_gain, wheel_sep, wheel_radius):
-        rospy.loginfo("[motor_driver]: init")
+        print("[motor_driver]: init")
 
         self.model = rospy.get_param("~model",False)
         self._wheel_sep = wheel_sep
@@ -40,14 +40,14 @@ class MotorDriver:
 
     # recommended for auto-disabling motors on shutdown!
     def turnOffMotors(self):
-        rospy.loginfo("[motor_driver]: turnOffMotors")
+        print("[motor_driver]: turnOffMotors")
 
         self._mh.motor1.throttle = 0
         self._mh.motor2.throttle = 0
         self.motors_on = False
 
     def drive(self,twist):
-        rospy.loginfo("[motor_driver]: drive")
+        print("[motor_driver]: drive")
 
         x = twist.linear.x
         w = twist.angular.z
@@ -89,7 +89,7 @@ class MotorDriver:
 
 
 if __name__ == '__main__':
-    rospy.loginfo("[motor_driver]: main")
+    print("[motor_driver]: main")
 
     node = rospy.init_node('motor_driver')
 
@@ -110,7 +110,7 @@ if __name__ == '__main__':
 
     if driver.model:
         timeout = 1
-        rospy.loginfo("[motor_driver]: Mode on")
+        print("[motor_driver]: Mode on")
     else:
         timeout = 0.1
 
